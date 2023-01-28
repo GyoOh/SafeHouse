@@ -1,0 +1,90 @@
+import * as React from "react";
+import styled from "styled-components";
+import AppText from "../AppText/AppText";
+import { useRouter } from "next/router";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+
+const BackgroundImageContainer = styled.div`
+  background-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 33.98%,
+      rgba(0, 0, 0, 0.85) 100%
+    ),
+    url(${(props) => props.src || "./vercel.svg"});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  // min-width: 250px !important;
+  min-width: 320px !important;
+  min-height: 180px;
+  background-color: #272727;
+  border-radius: 10px;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 120px 20px 20px 20px;
+  // box-shadow: 0px 4px 37px rgba(0, 0, 0, 0.35);
+  transition: all 0.4s ease-in-out;
+  // :hover {
+  //     scale: 1.05;
+  // }
+`;
+
+export default function Slider({
+  state = {
+    city: "Default Location",
+    province: "Default Province",
+    distance: "4km",
+    // image: "./img_placeholder.svg",
+    image: "http://placekitten.com/200/300",
+  },
+}) {
+  const router = useRouter();
+  const findCurrentPage = (id) => {
+    if (state.length) {
+      return state.findIndex((obj) => obj.id === id);
+    }
+    return;
+  };
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: "20px",
+        alignItems: "flex-start",
+        overflowX: "auto",
+        width: "100vw",
+        paddingLeft: "20px",
+        // maxWidth: "80vw",
+        msOverflowStyle: "none",
+        scrollbarWidth: "none",
+        backgroundColor: "#fff",
+      }}
+      className="cursor-pointer"
+    >
+      {state.map((post) => (
+        <BackgroundImageContainer
+          //   src={post.image && post.length > 0 ? post.image[0] : "./vercel.svg"}
+          src={post.image[0] || "../img_placeholder.svg"}
+          onClick={() => router.push(`/home/${post.id}`)}
+        >
+          <AppText
+            txt={`${post?.addressLine1 ? post.addressLine1 : "Address not provided"}`}
+            color="#f5f5f5"
+            fontSize="24px"
+          />
+
+          <div className="flex flex-col items-start">
+            <AppText txt={`${post?.city ? post.city : "City not provided"}`} color="#cdcdcd" fontSize="16px" />
+            <AppText
+              txt={`${post?.province ? post.province : "Province not provided"}`}
+              color="#cdcdcd"
+              fontSize="16px"
+            />
+          </div>
+        </BackgroundImageContainer>
+      ))}
+    </div>
+  );
+}
