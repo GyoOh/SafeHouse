@@ -6,6 +6,7 @@
 - [Features](#features)
 - [Technologies](#technologies)
 - [Setup](#setup)
+- [Link](https://www.safehouseapp.ca/)
 
 ## General info
 
